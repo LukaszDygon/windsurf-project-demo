@@ -16,8 +16,10 @@ Environment Variables:
 from flask import Flask, render_template, request, jsonify
 import requests
 import os
+import logging
 
 app = Flask(__name__)
+app.logger.setLevel(logging.ERROR)
 
 WEATHER_API_KEY = os.getenv('WEATHER_API_KEY', 'your_api_key_here')
 WEATHER_API_URL = 'https://api.openweathermap.org/data/3.0/onecall'
@@ -71,7 +73,7 @@ def get_weather():
 
             Error Response Format:
                 {
-                    "error": str  # Error message
+                    "error": str  # User-friendly error message
                 }
     
     Raises:
@@ -88,12 +90,12 @@ def get_weather():
         lon = request.args.get('lon')
         
         if not lat or not lon:
-            return jsonify({'error': 'Latitude and longitude are required'}), 400
+            return jsonify({'error': 'Please provide both latitude and longitude'}), 400
         
         params = {
             'lat': lat,
             'lon': lon,
-            'exclude': 'minutely',  # Include alerts
+            'exclude': 'minutely',
             'appid': WEATHER_API_KEY
         }
         
@@ -102,10 +104,27 @@ def get_weather():
         
         return jsonify(response.json())
         
-    except requests.RequestException as e:
-        return jsonify({'error': f'Weather API error: {str(e)}'}), 500
+    except requests.exceptions.HTTPError as e:
+        # Handle specific HTTP errors from OpenWeatherMap API
+        if response.status_code == 401:
+            app.logger.error(f"API Authentication failed: {str(e)}")
+            return jsonify({'error': 'Unable to fetch weather data. Please try again later.'}), 500
+        elif response.status_code == 429:
+            app.logger.error(f"API rate limit exceeded: {str(e)}")
+            return jsonify({'error': 'Weather service is temporarily busy. Please try again in a few minutes.'}), 500
+        else:
+            app.logger.error(f"HTTP error occurred: {str(e)}")
+            return jsonify({'error': 'Unable to fetch weather data. Please try again later.'}), 500
+            
+    except requests.exceptions.RequestException as e:
+        # Handle network-related errors
+        app.logger.error(f"Network error occurred: {str(e)}")
+        return jsonify({'error': 'Unable to connect to weather service. Please check your internet connection.'}), 500
+        
     except Exception as e:
-        return jsonify({'error': f'Server error: {str(e)}'}), 500
+        # Handle any other unexpected errors
+        app.logger.error(f"Unexpected error occurred: {str(e)}")
+        return jsonify({'error': 'An unexpected error occurred. Please try again later.'}), 500
 
 @app.route('/static/js/<path:filename>')
 def serve_js(filename):
