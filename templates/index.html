@@ -8,9 +8,49 @@
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
           crossorigin=""/>
     <title>Rad Windsurfing Vibes 🏄‍♂️</title>
+    <style>
+        #boids-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(to bottom, #f0f8ff, #e6f3ff);
+        }
+        #toggle-ui {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #2980b9;
+            transition: all 0.3s ease;
+        }
+        #toggle-ui:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        #map-container {
+            transition: all 0.3s ease;
+        }
+        #dashboard {
+            transition: all 0.3s ease;
+        }
+        .hidden {
+            display: none !important;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <canvas id="boids-canvas"></canvas>
+    <button id="toggle-ui">Toggle UI</button>
+    <div id="map-container" class="container">
         <h1>Catch The Perfect Wave! 🌊</h1>
         
         <div id="alerts-container" class="alerts-container"></div>
@@ -38,5 +78,23 @@
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
     <script type="module" src="/static/js/main.js"></script>
+    <script type="module">
+        import { BoidsSimulation } from '/static/js/boids.js';
+        
+        // Initialize and start boids simulation
+        const simulation = new BoidsSimulation('boids-canvas');
+        simulation.start();
+
+        // Setup UI toggle
+        const toggleBtn = document.getElementById('toggle-ui');
+        const mapContainer = document.getElementById('map-container');
+        let uiVisible = true;
+
+        toggleBtn.addEventListener('click', () => {
+            uiVisible = !uiVisible;
+            mapContainer.classList.toggle('hidden');
+            toggleBtn.textContent = uiVisible ? 'Toggle UI' : 'Show UI';
+        });
+    </script>
 </body>
 </html>
