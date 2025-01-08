@@ -1,0 +1,258 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1, h2 {
+    color: #333;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 30px;
+}
+
+h2 {
+    margin: 20px 0;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+input {
+    padding: 10px;
+    width: 150px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Alerts Styling */
+.alerts-container {
+    margin-bottom: 20px;
+}
+
+.alert {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.alert.severe {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.alert-close {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0 10px;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+/* Change cursor when dragging the map */
+#map.leaflet-drag-target {
+    cursor: grabbing !important;
+}
+
+/* Override Leaflet's default grab cursor */
+.leaflet-container {
+    cursor: pointer !important;
+}
+
+.leaflet-dragging .leaflet-container {
+    cursor: grabbing !important;
+}
+
+.coordinates-display {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.weather-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.current-weather {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.weather-icon {
+    width: 100px;
+    height: 100px;
+}
+
+.temperature {
+    font-size: 1.5em;
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.temp-label {
+    font-size: 0.8em;
+    color: #666;
+    margin-right: 5px;
+}
+
+.weather-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.weather-detail-item {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Hourly Forecast Styles */
+.hourly-forecast {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.forecast-scroll {
+    overflow-x: auto;
+    padding: 20px 0;
+    margin: 0 -20px;
+}
+
+.forecast-container {
+    display: flex;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.forecast-item {
+    flex: 0 0 auto;
+    width: 150px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.forecast-item:hover {
+    transform: translateY(-5px);
+}
+
+.forecast-item img {
+    width: 50px;
+    height: 50px;
+}
+
+.forecast-time {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.forecast-date {
+    color: #666;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.forecast-temp {
+    margin: 5px 0;
+    font-size: 1.1em;
+}
+
+.forecast-temp div {
+    margin: 2px 0;
+}
+
+.wind-speed {
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #e9ecef;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.wind-speed.good {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.wind-speed.moderate {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.wind-speed.strong {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.error {
+    color: #dc3545;
+    text-align: center;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f8d7da;
+    border-radius: 4px;
+    display: none;
+}
